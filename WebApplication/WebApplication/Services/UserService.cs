@@ -12,11 +12,35 @@ namespace WebApplication.Services
     {
         private readonly IMapper _mapper;
         private readonly WebApplicationDbContext _dbContext;
+        private readonly ITokenService _tokenService;
 
-        public UserService(IMapper mapper, WebApplicationDbContext dbContext)
+        public UserService(IMapper mapper, WebApplicationDbContext dbContext, ITokenService tokenService)
         {
             _mapper = mapper;
             _dbContext = dbContext;
+            _tokenService = tokenService;
+        }
+
+        public string Login(LoginDTO loginDTO)
+        {
+            if(!EmailExists(loginDTO.Email))
+            {
+                throw new Exception("Unknown email!");
+            }
+            if(String.IsNullOrEmpty(loginDTO.Password))
+            {
+                throw new Exception("Password can't be empty!");
+            }
+
+            User user = FindByEmail(loginDTO.Email);
+
+            if (!BCrypt.Net.BCrypt.Verify(loginDTO.Password, user.Password))
+            {
+                throw new Exception("Incorrect password");
+            }_tokenService.CreateToken(user.Id, user.Username, user.UserType);
+
+            return _tokenService.CreateToken(user.Id, user.Username, user.UserType);
+
         }
 
         public RegisterDTO RegisterUser(RegisterDTO registerDTO)
@@ -27,30 +51,12 @@ namespace WebApplication.Services
                 throw new Exception(message);
             }
 
-            if (registerDTO.UserType is "Customer")
-            {
-                Customer customer = _mapper.Map<Customer>(registerDTO);
-                customer.Password = BCrypt.Net.BCrypt.HashPassword(customer.Password, BCrypt.Net.BCrypt.GenerateSalt());
-                _dbContext.Customers.Add(customer);
-                _dbContext.SaveChanges();
-                return _mapper.Map<RegisterDTO>(registerDTO);
-            }
-            else if (registerDTO.UserType is "Seller")
-            {
-                Seller seller = _mapper.Map<Seller>(registerDTO);
-                seller.Password = BCrypt.Net.BCrypt.HashPassword(seller.Password, BCrypt.Net.BCrypt.GenerateSalt());
-                _dbContext.Sellers.Add(seller);
-                _dbContext.SaveChanges();
-                return _mapper.Map<RegisterDTO>(registerDTO);
-            }
-            else
-            {
-                Admin admin = _mapper.Map<Admin>(registerDTO);
-                admin.Password = BCrypt.Net.BCrypt.HashPassword(admin.Password, BCrypt.Net.BCrypt.GenerateSalt());
-                _dbContext.Admins.Add(admin);
-                _dbContext.SaveChanges();
-                return _mapper.Map<RegisterDTO>(registerDTO);
-            }
+            User user = _mapper.Map<User>(registerDTO);
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, BCrypt.Net.BCrypt.GenerateSalt());
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
+            return _mapper.Map<RegisterDTO>(registerDTO);
+            
             
         }
 
@@ -117,48 +123,26 @@ namespace WebApplication.Services
             return true;
         }
 
-        public LoginDTO SearchUser(string username)
+        public User FindByUsername(string username)
         {
-            LoginDTO loginDTO = new LoginDTO();
-            loginDTO.Username = "";
-            loginDTO.Password = "";
+            var user = _dbContext.Users.FirstOrDefault(u => u.Username == username);
+            return user;
+        }
 
-            var customer = _dbContext.Customers.FirstOrDefault(c => c.Username == username);
-            if (customer != null)
-            {
-                loginDTO.Username = customer.Username;
-                loginDTO.Password = customer.Password;
-                return loginDTO;
-            }
-
-            var seller = _dbContext.Sellers.FirstOrDefault(s => s.Username == username);
-            if (seller != null)
-            {
-                loginDTO.Username = seller.Username;
-                loginDTO.Password = seller.Password;
-                return loginDTO;
-            }
-
-            var admin = _dbContext.Admins.FirstOrDefault(a => a.Username == username);      
-            if (admin != null)
-            {
-                loginDTO.Username = admin.Username;
-                loginDTO.Password = admin.Password;
-                return loginDTO;
-            }
-
-            return loginDTO;
-
+        public User FindByEmail(string email)
+        {
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            return user;
         }
 
         public bool UserExists(string username)
         {
-            return _dbContext.Admins.Any(a => a.Username == username) || _dbContext.Sellers.Any(s => s.Username == username) || _dbContext.Customers.Any(c => c.Username == username);
+            return _dbContext.Users.Any(a => a.Username == username);
         }
 
         public bool EmailExists(string email)
         {
-            return _dbContext.Admins.Any(a => a.Email == email) || _dbContext.Sellers.Any(s => s.Email == email) || _dbContext.Customers.Any(c => c.Email == email);
+            return _dbContext.Users.Any(a => a.Email == email);
         }
 
     }

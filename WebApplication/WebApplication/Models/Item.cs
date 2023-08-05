@@ -9,6 +9,6 @@
         public string Description { get; set; }
         public byte[] ItemImg { get; set; }
         public int SellerId { get; set; }
-        public Seller Seller { get; set; }
+        public User Seller { get; set; }
     }
 }

@@ -8,9 +8,7 @@ namespace WebApplication.Mapping
     {
         public MappingProfile() 
         {
-            CreateMap<Customer, RegisterDTO>().ReverseMap();
-            CreateMap<Seller, RegisterDTO>().ReverseMap();
-            CreateMap<Admin, RegisterDTO>().ReverseMap();
+            CreateMap<User, RegisterDTO>().ReverseMap();
         }
     }
 }

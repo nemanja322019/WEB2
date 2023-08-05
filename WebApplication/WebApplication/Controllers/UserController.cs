@@ -15,6 +15,13 @@ namespace WebApplication.Controllers
             _userService = userService;
         }
 
+        [HttpPost("login")]
+        public IActionResult Login(LoginDTO loginDTO)
+        {
+            string token =  _userService.Login(loginDTO);
+            return Ok();
+        }
+
         [HttpPost("registration")]
         public IActionResult Register(RegisterDTO registerDTO)
         {

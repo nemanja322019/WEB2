@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using WebApplication.Enums;
 using WebApplication.Models;
 
 namespace WebApplication.Infrastructure
 {
-    public class AdminConfiguration : IEntityTypeConfiguration<Admin>
+    public class UserConfiguration : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<Admin> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
@@ -19,6 +20,11 @@ namespace WebApplication.Infrastructure
 
             builder.HasIndex(x => x.Email).IsUnique();
 
+            builder.Property(x => x.UserType)
+                   .HasConversion(
+                       x => x.ToString(),
+                       x => Enum.Parse<UserTypes>(x)
+                   );
         }
     }
 }

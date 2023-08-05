@@ -17,7 +17,7 @@ namespace WebApplication.Infrastructure
             builder.HasOne(x => x.Seller)
                    .WithMany(x => x.Items)
                    .HasForeignKey(x => x.SellerId)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .OnDelete(DeleteBehavior.NoAction);
 
         }
     }

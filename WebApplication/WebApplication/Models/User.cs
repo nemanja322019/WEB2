@@ -1,6 +1,8 @@
-﻿namespace WebApplication.Models
+﻿using WebApplication.Enums;
+
+namespace WebApplication.Models
 {
-    public abstract class User
+    public class User
     {
         public int Id { get; set; }
         public string Username { get; set; }
@@ -10,6 +12,9 @@
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public string Address { get; set; }
+        public UserTypes UserType { get; set; }
+        public List<Item> Items { get; set; }
+
         //public byte[] Image { get; set; }
     }
 }
