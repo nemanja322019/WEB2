@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "BR6mIsANALfXnc46ELLSZal2T1H+j0OO6qMfgvFrQg3s1M1CwtleZyFRIzCKpiOlMO3ENlgNfeQs/rLeV81PVA==",
+  "dgSpecHash": "h+tdC2/Dpi0MdgFDCUP406BHJ5bZuk/faEhBHF1CGAwnZtrVoJF7tsMTOiesUOZSo4Oz5Q4Mv7yXQLouCoKsLQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Nex\\Desktop\\Web2\\WEB2\\WebApplication\\WebApplication\\WebApplication.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nex\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Nex\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Nex\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\Nex\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\6.0.21\\microsoft.aspnetcore.authentication.google.6.0.21.nupkg.sha512",
     "C:\\Users\\Nex\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.20\\microsoft.aspnetcore.authentication.jwtbearer.6.0.20.nupkg.sha512",
     "C:\\Users\\Nex\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Nex\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",

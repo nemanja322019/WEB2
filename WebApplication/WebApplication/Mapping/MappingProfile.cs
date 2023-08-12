@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using WebApplication.DTO;
+using WebApplication.DTO.ItemDTO;
+using WebApplication.DTO.UserDTO;
 using WebApplication.Models;
 
 namespace WebApplication.Mapping
@@ -9,6 +10,12 @@ namespace WebApplication.Mapping
         public MappingProfile() 
         {
             CreateMap<User, RegisterDTO>().ReverseMap();
+            CreateMap<User, DisplayProfileDTO>().ReverseMap();
+
+
+            CreateMap<Item, DisplayItemDTO>().ReverseMap();
+            CreateMap<Item, CreateItemDTO>().ReverseMap();
+
         }
     }
 }

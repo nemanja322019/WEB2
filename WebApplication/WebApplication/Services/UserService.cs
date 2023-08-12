@@ -2,6 +2,8 @@
 using AutoMapper.Internal;
 using System.Text.RegularExpressions;
 using WebApplication.DTO;
+using WebApplication.DTO.UserDTO;
+using WebApplication.Enums;
 using WebApplication.Infrastructure;
 using WebApplication.Interfaces;
 using WebApplication.Models;
@@ -21,6 +23,81 @@ namespace WebApplication.Services
             _tokenService = tokenService;
         }
 
+        public IEnumerable<DisplayProfileDTO> GetSellers()
+        {
+            IEnumerable<User> temp = _dbContext.Users.Where(user => user.UserType == UserTypes.SELLER);
+
+            IEnumerable<DisplayProfileDTO> allSellers = _mapper.Map<IEnumerable<DisplayProfileDTO>>(temp);
+
+            return allSellers;
+        }
+
+        public DisplayProfileDTO VerifySeller(int id, bool isAccepted)
+        {
+            User user = _dbContext.Users.Find(id);
+            if(user == null)
+            {
+                throw new Exception("Id not found!");
+            }
+            user.IsVerified = isAccepted;
+            user.VerificationStatus = VerificationStatus.REJECTED;
+            if(user.IsVerified)
+            {
+                user.VerificationStatus = VerificationStatus.ACCEPTED;
+            }
+
+            _dbContext.SaveChanges();
+            return _mapper.Map<DisplayProfileDTO>(user);
+        }
+
+        public DisplayProfileDTO UpdateProfile(int id, UpdateProfileDTO updateProfileDTO)
+        {
+            User user = _dbContext.Users.Find(id);
+            if (user == null)
+            {
+                throw new Exception("Id not found!");
+            }
+
+            string message;
+            if(!ValidateFields(updateProfileDTO,out message))
+            {
+                throw new Exception(message);
+            }
+
+            user.Name = updateProfileDTO.Name;
+            user.LastName = updateProfileDTO.LastName;
+            user.Address = updateProfileDTO.Address;
+            user.BirthDate = updateProfileDTO.BirthDate;
+            _dbContext.SaveChanges();
+
+            return _mapper.Map<DisplayProfileDTO>(user);
+
+        }
+
+        public DisplayProfileDTO ChangePassword(int id, ChangePasswordDTO changePasswordDTO)
+        {
+            User user = _dbContext.Users.Find(id);
+            if (user == null)
+            {
+                throw new Exception("Id not found!");
+            }
+
+            if (!BCrypt.Net.BCrypt.Verify(changePasswordDTO.OldPassword, user.Password))
+            {
+                throw new Exception("Incorrect password");
+            }
+
+            if (String.IsNullOrEmpty(changePasswordDTO.NewPassword))
+            {
+                throw new Exception("Password can't be empty!");
+            }
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(changePasswordDTO.NewPassword, BCrypt.Net.BCrypt.GenerateSalt());
+            _dbContext.SaveChanges();
+            
+            return _mapper.Map<DisplayProfileDTO>(user);
+        }
+
         public string Login(LoginDTO loginDTO)
         {
             if(!EmailExists(loginDTO.Email))
@@ -37,7 +114,7 @@ namespace WebApplication.Services
             if (!BCrypt.Net.BCrypt.Verify(loginDTO.Password, user.Password))
             {
                 throw new Exception("Incorrect password");
-            }_tokenService.CreateToken(user.Id, user.Username, user.UserType);
+            }
 
             return _tokenService.CreateToken(user.Id, user.Username, user.UserType);
 
@@ -52,6 +129,12 @@ namespace WebApplication.Services
             }
 
             User user = _mapper.Map<User>(registerDTO);
+            user.VerificationStatus = VerificationStatus.PENDING;
+            if(user.UserType != UserTypes.SELLER)
+            {
+                user.IsVerified = true;
+                user.VerificationStatus = VerificationStatus.ACCEPTED;
+            }
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, BCrypt.Net.BCrypt.GenerateSalt());
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
@@ -60,11 +143,40 @@ namespace WebApplication.Services
             
         }
 
+        public bool ValidateFields(UpdateProfileDTO updateProfileDTO, out string message)
+        {
+            message = "";
+            if (String.IsNullOrWhiteSpace(updateProfileDTO.Name))
+            {
+                message = "Name can't be empty!";
+                return false;
+            }
+
+            if (String.IsNullOrWhiteSpace(updateProfileDTO.LastName))
+            {
+                message = "Last name can't be empty!";
+                return false;
+            }
+
+            if (String.IsNullOrWhiteSpace(updateProfileDTO.Address))
+            {
+                message = "Address can't be empty!";
+                return false;
+            }
+
+            if(updateProfileDTO.BirthDate.Year < 1900 || updateProfileDTO.BirthDate > DateTime.Now)
+            {
+                message = "Invalid birth date!";
+                return false;
+            }
+            return true;
+        }
+
         public bool ValidateFields(RegisterDTO registerDTO, out string message)
         {
             message = "";
 
-            if(!String.Equals(registerDTO.UserType,"Customer") && !String.Equals(registerDTO.UserType, "Seller") && !String.Equals(registerDTO.UserType, "Admin"))
+            if(!String.Equals(registerDTO.UserType.ToLower(),"customer") && !String.Equals(registerDTO.UserType.ToLower(), "seller") && !String.Equals(registerDTO.UserType.ToLower(), "admin"))
             {
                 message = "Invalid user type!";
                 return false;
@@ -74,37 +186,43 @@ namespace WebApplication.Services
 
             if (!emailRegex.Match(registerDTO.Email).Success)
             {
-                message = "Invalid email";
+                message = "Invalid email!";
                 return false;
             }
 
             if (String.IsNullOrWhiteSpace(registerDTO.Username))
             {
-                message = "Username can't be empty";
+                message = "Username can't be empty!";
                 return false;
             }
 
             if (String.IsNullOrWhiteSpace(registerDTO.Password))
             {
-                message = "Password can't be empty";
+                message = "Password can't be empty!";
                 return false;
             }
 
             if (String.IsNullOrWhiteSpace(registerDTO.Name))
             {
-                message = "Name can't be empty";
+                message = "Name can't be empty!";
                 return false;
             }
 
             if (String.IsNullOrWhiteSpace(registerDTO.LastName))
             {
-                message = "Last name can't be empty";
+                message = "Last name can't be empty!";
                 return false;
             }
 
             if (String.IsNullOrWhiteSpace(registerDTO.Address))
             {
-                message = "Address can't be empty";
+                message = "Address can't be empty!";
+                return false;
+            }
+
+            if (registerDTO.BirthDate.Year < 1900 || registerDTO.BirthDate > DateTime.Now)
+            {
+                message = "Invalid birth date!";
                 return false;
             }
 
@@ -121,6 +239,16 @@ namespace WebApplication.Services
             }
 
             return true;
+        }
+
+        public DisplayProfileDTO FindById(int id)
+        {
+            User user = _dbContext.Users.Find(id);
+            if (user == null)
+            {
+                throw new Exception("Id not found!");
+            }
+            return _mapper.Map<DisplayProfileDTO>(user);
         }
 
         public User FindByUsername(string username)

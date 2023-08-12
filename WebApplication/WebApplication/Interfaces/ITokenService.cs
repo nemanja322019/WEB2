@@ -1,4 +1,5 @@
-﻿using WebApplication.Enums;
+﻿using WebApplication.DTO;
+using WebApplication.Enums;
 
 namespace WebApplication.Interfaces
 {

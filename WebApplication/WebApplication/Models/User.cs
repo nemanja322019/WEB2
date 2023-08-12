@@ -14,6 +14,8 @@ namespace WebApplication.Models
         public string Address { get; set; }
         public UserTypes UserType { get; set; }
         public List<Item> Items { get; set; }
+        public VerificationStatus VerificationStatus { get; set; }
+        public bool IsVerified { get; set; }
 
         //public byte[] Image { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿namespace WebApplication.DTO
+﻿namespace WebApplication.DTO.UserDTO
 {
     public class LoginDTO
     {

@@ -12,7 +12,7 @@ using WebApplication.Infrastructure;
 namespace WebApplication.Migrations
 {
     [DbContext(typeof(WebApplicationDbContext))]
-    [Migration("20230804163402_PrvaMigracija")]
+    [Migration("20230812152722_PrvaMigracija")]
     partial class PrvaMigracija
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,10 +39,6 @@ namespace WebApplication.Migrations
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
-
-                    b.Property<byte[]>("ItemImg")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ItemName")
                         .IsRequired()
@@ -81,6 +77,9 @@ namespace WebApplication.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -103,6 +102,10 @@ namespace WebApplication.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("VerificationStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

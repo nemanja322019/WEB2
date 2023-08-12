@@ -13,6 +13,7 @@ using WebApplication.Services;
 
 var builder = Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder(args);
 
+string _cors = "cors";
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -48,7 +49,8 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddAuthentication(opt => {
+builder.Services.AddAuthentication(opt =>
+{
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
@@ -64,12 +66,28 @@ builder.Services.AddAuthentication(opt => {
         ValidIssuer = "http://localhost:7123",
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["SecretKey"]))
     };
+}).AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = builder.Configuration["GoogleAuth:GoogleClientId"];
+    googleOptions.ClientSecret = builder.Configuration["GoogleAuth:GoogleClientSecret"];
+
+    
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: _cors, builder => {
+        builder.SetIsOriginAllowed(origin => true)
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials();
+    });
+});
 
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IItemService, ItemService>();
 
 builder.Services.AddDbContext<WebApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApplicationDatabase")));
 
@@ -95,6 +113,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseCors(_cors);
 
 app.UseAuthentication();
 app.UseAuthorization();
