@@ -51,7 +51,7 @@ namespace WebApplication.Controllers
 
         [HttpGet("seller/{id}")]
         [Authorize(Roles = "seller")]
-        public async Task<IActionResult> GetItemsForSeller(int id)
+        public IActionResult GetItemsForSeller(int id)
         {
             IEnumerable<DisplayItemDTO> items = _itemService.GetItemsFromSeller(id);
             return Ok(items);

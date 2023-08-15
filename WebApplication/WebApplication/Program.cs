@@ -88,6 +88,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IItemService, ItemService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddDbContext<WebApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApplicationDatabase")));
 

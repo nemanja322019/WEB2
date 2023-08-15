@@ -10,5 +10,6 @@
         //public byte[] ItemImg { get; set; }
         public int SellerId { get; set; }
         public User Seller { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
     }
 }
