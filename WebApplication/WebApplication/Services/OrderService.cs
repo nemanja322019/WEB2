@@ -73,41 +73,93 @@ namespace WebApplication.Services
             order.Price = price + dostava;
             _dbContext.SaveChanges();
 
-            return _mapper.Map<DisplayOrderDTO>(_dbContext.Orders.Include(o => o.Customer)
-                                                 .Include(o => o.OrderItems)
-                                                 .ThenInclude(o => o.Item)
-                                                 .ThenInclude(p => p.Seller)
-                                                 .Where(o => o.Id == order.Id)
-                                                 .FirstOrDefault());
+            return _mapper.Map<DisplayOrderDTO>(ExtractOrderData(order));
         }
         public DisplayOrderDTO CancelOrder(int id)
         {
-            throw new NotImplementedException();
+            Order order = _dbContext.Orders.Find(id);
+            if(order == null)
+            {
+                throw new Exception("Order id not found!");
+            }
+
+            if(order.OrderTime.AddHours(1) < DateTime.Now)
+            {
+                throw new Exception("Too late to cancel the order!");
+            }
+
+            ExtractOrderData(order);
+            order.IsCanceled = true;
+            foreach(OrderItem orderedItem in order.OrderItems)
+            {
+                orderedItem.Item.Amount += orderedItem.Amount;
+            }
+
+            _dbContext.SaveChanges();
+
+            return _mapper.Map<DisplayOrderDTO>(order);
         }
 
         public IEnumerable<DisplayOrderDTO> GetAllOrders()
         {
-            throw new NotImplementedException();
+            IEnumerable<Order> orders = _dbContext.Orders;
+            foreach(Order order in orders)
+            {
+                ExtractOrderData(order);
+            }
+            return _mapper.Map<IEnumerable<DisplayOrderDTO>>(orders);
         }
 
         public IEnumerable<DisplayOrderDTO> GetDeliveredOrdersFromCustomer(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<DisplayOrderDTO> GetNewOrdersFromSeller(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<DisplayOrderDTO> GetOldOrdersFromSeller(int id)
-        {
-            throw new NotImplementedException();
+            IEnumerable<Order> orders = _dbContext.Orders.Where(o => o.Customer.Id == id && o.DeliveryTime < DateTime.Now && !o.IsCanceled);
+            foreach (Order order in orders)
+            {
+                ExtractOrderData(order);
+            }
+            return _mapper.Map<IEnumerable<DisplayOrderDTO>>(orders);
         }
 
         public IEnumerable<DisplayOrderDTO> GetOngoingOrdersFromCustomer(int id)
         {
-            throw new NotImplementedException();
+            IEnumerable<Order> orders = _dbContext.Orders.Where(o => o.Customer.Id == id && o.DeliveryTime > DateTime.Now && !o.IsCanceled);
+            foreach (Order order in orders)
+            {
+                ExtractOrderData(order);
+            }
+            return _mapper.Map<IEnumerable<DisplayOrderDTO>>(orders);
+        }
+
+        public IEnumerable<DisplayOrderDTO> GetNewOrdersFromSeller(int id)
+        {
+            List<Order> orders = _dbContext.Orders.Where(o => o.DeliveryTime > DateTime.Now && !o.IsCanceled).ToList();
+            foreach (Order order in orders)
+            {
+                ExtractOrderData(order);
+            }
+            orders = orders.FindAll(o => o.OrderItems.FindAll(oi => oi.Item.SellerId == id).Count != 0);
+            return _mapper.Map<IEnumerable<DisplayOrderDTO>>(orders);
+        }
+
+        public IEnumerable<DisplayOrderDTO> GetOldOrdersFromSeller(int id)
+        {
+            List<Order> orders = _dbContext.Orders.Where(o => o.DeliveryTime < DateTime.Now).ToList();
+            foreach (Order order in orders)
+            {
+                ExtractOrderData(order);
+            }
+            orders = orders.FindAll(o => o.OrderItems.FindAll(oi => oi.Item.SellerId == id).Count != 0);
+            return _mapper.Map<IEnumerable<DisplayOrderDTO>>(orders);
+        }
+
+        public Order ExtractOrderData(Order order)
+        {
+            return _dbContext.Orders.Include(o => o.Customer)
+                                                 .Include(o => o.OrderItems)
+                                                 .ThenInclude(o => o.Item)
+                                                 .ThenInclude(p => p.Seller)
+                                                 .Where(o => o.Id == order.Id)
+                                                 .FirstOrDefault();
         }
 
     }
