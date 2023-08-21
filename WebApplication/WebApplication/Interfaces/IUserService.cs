@@ -5,7 +5,7 @@ namespace WebApplication.Interfaces
 {
     public interface IUserService
     {
-        public RegisterDTO RegisterUser(RegisterDTO registerDTO);
+        public void RegisterUser(RegisterDTO registerDTO);
         public string Login(LoginDTO loginDTO);
         public DisplayProfileDTO FindById(int id);
         public DisplayProfileDTO UpdateProfile(int id, UpdateProfileDTO updateProfileDTO);

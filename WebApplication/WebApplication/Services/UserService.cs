@@ -100,7 +100,17 @@ namespace WebApplication.Services
 
         public string Login(LoginDTO loginDTO)
         {
-            if(!EmailExists(loginDTO.Email))
+            if (String.IsNullOrEmpty(loginDTO.Email))
+            {
+                throw new Exception("Email can't be empty!");
+            }
+            Regex emailRegex = new Regex(@"^([\w.-]+)@([\w-]+)((.(\w){2,3})+)$");
+
+            if (!emailRegex.Match(loginDTO.Email).Success)
+            {
+                throw new Exception("Invalid email!");
+            }
+            if (!EmailExists(loginDTO.Email))
             {
                 throw new Exception("Unknown email!");
             }
@@ -120,7 +130,7 @@ namespace WebApplication.Services
 
         }
 
-        public RegisterDTO RegisterUser(RegisterDTO registerDTO)
+        public void RegisterUser(RegisterDTO registerDTO)
         {
             string message;
             if (!ValidateFields(registerDTO, out message))
@@ -138,7 +148,6 @@ namespace WebApplication.Services
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, BCrypt.Net.BCrypt.GenerateSalt());
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
-            return _mapper.Map<RegisterDTO>(registerDTO);
             
             
         }

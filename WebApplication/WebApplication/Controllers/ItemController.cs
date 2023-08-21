@@ -21,40 +21,80 @@ namespace WebApplication.Controllers
         [Authorize(Roles = "seller")]
         public IActionResult Post(CreateItemDTO createItemDTO)
         {
-            DisplayItemDTO displayItemDTO = _itemService.CreateItem(createItemDTO);
-            return Ok(displayItemDTO);
+            try
+            {
+                DisplayItemDTO displayItemDTO = _itemService.CreateItem(createItemDTO);
+                return Ok(displayItemDTO);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+
         }
 
         [HttpPost("{id}")]
         [Authorize(Roles = "seller")]
         public IActionResult Put(int id, UpdateItemDTO updateItemDTO)
         {
-            DisplayItemDTO displayItemDTO = _itemService.UpdateItem(id, updateItemDTO);
-            return Ok(displayItemDTO);
+            try
+            {
+                DisplayItemDTO displayItemDTO = _itemService.UpdateItem(id, updateItemDTO);
+                return Ok(displayItemDTO);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+
         }
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "seller")]
         public IActionResult Delete(int id)
         {
-            _itemService.DeleteItem(id);
-            return NoContent();
+            try
+            {
+                _itemService.DeleteItem(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+
         }
 
         [HttpGet]
         [Authorize]
         public IActionResult GetItems()
         {
-            IEnumerable<DisplayItemDTO> items = _itemService.GetItems();
-            return Ok(items);
+            try
+            {
+                IEnumerable<DisplayItemDTO> items = _itemService.GetItems();
+                return Ok(items);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+
         }
 
         [HttpGet("seller/{id}")]
         [Authorize(Roles = "seller")]
         public IActionResult GetItemsForSeller(int id)
         {
-            IEnumerable<DisplayItemDTO> items = _itemService.GetItemsFromSeller(id);
-            return Ok(items);
+            try
+            {
+                IEnumerable<DisplayItemDTO> items = _itemService.GetItemsFromSeller(id);
+                return Ok(items);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+
         }
     }
 }

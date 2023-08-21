@@ -21,56 +21,112 @@ namespace WebApplication.Controllers
         [Authorize(Roles = "customer")]
         public IActionResult Post(NewOrderDTO newOrderDTO)
         {
-            DisplayOrderDTO displayOrderDTO = _orderService.NewOrder(newOrderDTO);
-            return Ok(displayOrderDTO);
+            try
+            {
+                DisplayOrderDTO displayOrderDTO = _orderService.NewOrder(newOrderDTO);
+                return Ok(displayOrderDTO);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+
         }
 
         [HttpPut("{id}/cancel")]
         [Authorize(Roles = "customer")]
         public IActionResult CancelOrder(int id)
         {
-            DisplayOrderDTO displayOrderDTO = _orderService.CancelOrder(id);
-            return Ok(displayOrderDTO);
+            try
+            {
+                DisplayOrderDTO displayOrderDTO = _orderService.CancelOrder(id);
+                return Ok(displayOrderDTO);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+
         }
 
         [HttpGet("{id}/delivered")]
         [Authorize(Roles = "customer")]
         public IActionResult GetDeliveredOrdersFromCustomer(int id)
         {
-            IEnumerable<DisplayOrderDTO> orders = _orderService.GetDeliveredOrdersFromCustomer(id);
-            return Ok(orders);
+            try
+            {
+                IEnumerable<DisplayOrderDTO> orders = _orderService.GetDeliveredOrdersFromCustomer(id);
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+
         }
 
         [HttpGet("{id}/ongoing")]
         [Authorize(Roles = "customer")]
         public IActionResult GetOngoingOrdersFromCustomer(int id)
         {
-            IEnumerable<DisplayOrderDTO> orders = _orderService.GetOngoingOrdersFromCustomer(id);
-            return Ok(orders);
+            try
+            {
+                IEnumerable<DisplayOrderDTO> orders = _orderService.GetOngoingOrdersFromCustomer(id);
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+
         }
 
         [HttpGet("seller/{id}/new")]
         [Authorize(Roles = "seller")]
         public IActionResult GetNewOrdersFromSeller(int id)
         {
-            IEnumerable<DisplayOrderDTO> orders = _orderService.GetNewOrdersFromSeller(id);
-            return Ok(orders);
+            try
+            {
+                IEnumerable<DisplayOrderDTO> orders = _orderService.GetNewOrdersFromSeller(id);
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+
         }
 
         [HttpGet("seller/{id}/old")]
         [Authorize(Roles = "seller")]
         public IActionResult GetOldOrdersFromSeller(int id)
         {
-            IEnumerable<DisplayOrderDTO> orders = _orderService.GetOldOrdersFromSeller(id);
-            return Ok(orders);
+            try
+            {
+                IEnumerable<DisplayOrderDTO> orders = _orderService.GetOldOrdersFromSeller(id);
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+
         }
 
         [HttpGet("admin/all")]
         [Authorize(Roles = "admin")]
         public IActionResult GetAllOrders()
         {
-            IEnumerable<DisplayOrderDTO> orders = _orderService.GetAllOrders();
-            return Ok(orders);
+            try
+            {
+                IEnumerable<DisplayOrderDTO> orders = _orderService.GetAllOrders();
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+
         }
 
     }
