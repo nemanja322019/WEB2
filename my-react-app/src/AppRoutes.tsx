@@ -6,6 +6,11 @@ import RegisterPage from './Pages/RegisterPage';
 import Dashboard from "./Pages/Dashboard";
 import ProfilePage from "./Pages/ProfilePage";
 import VerifyUserPage from "./Pages/VerifyUserPage";
+import CreateItemPage from "./Pages/CreateItemPage";
+import EditItemsPage from "./Pages/EditItemsPage";
+import EditItemPage from "./Pages/EditItemPage";
+import AvailableItemsPage from "./Pages/AvailableItemsPage";
+import NewOrderPage from "./Pages/NewOrderPage";
 
 const AppRoutes: FC = () => {
   return (
@@ -18,6 +23,11 @@ const AppRoutes: FC = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/verifyuser" element={<VerifyUserPage />} />
+        <Route path="/createitem" element={<CreateItemPage />} />
+        <Route path="/edititems" element={<EditItemsPage />} />
+        <Route path="/edititem" element={<EditItemPage />} />
+        <Route path="/availableitems" element={<AvailableItemsPage />} />
+        <Route path="/neworder" element={<NewOrderPage />} />
         </Routes>
     </Router>
     );

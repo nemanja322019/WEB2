@@ -33,7 +33,7 @@ namespace WebApplication.Controllers
 
         }
 
-        [HttpPost("{id}")]
+        [HttpPut("{id}")]
         [Authorize(Roles = "seller")]
         public IActionResult Put(int id, UpdateItemDTO updateItemDTO)
         {

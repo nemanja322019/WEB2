@@ -16,6 +16,8 @@ const Dashboard: React.FC = () => {
       });
   }, []);
 
+  const createItemLinkState = userProfile ? { userProfile } : undefined;
+
   return (
     <div>
       {isLoggedIn() ? (
@@ -26,24 +28,25 @@ const Dashboard: React.FC = () => {
             <p>Your account is not verified. Please wait for verification.</p>
           ) : (
             <>
-              <Link to="/profile">Profile</Link>
+              <Link to="/profile">Profile</Link><br/>
               {userType === 'seller' && (
                 <>
-                  <Link to="/">Create Item</Link>
-                  <Link to="/">New Orders</Link>
-                  <Link to="/">Old Orders</Link>
+                  <Link to="/createitem" state={createItemLinkState}>Create Item</Link><br/>
+                  <Link to="/edititems" state={createItemLinkState}>Edit Items</Link><br/>
+                  <Link to="/">New Orders</Link><br/>
+                  <Link to="/">Old Orders</Link><br/>
                 </>
               )}
               {userType === 'customer' && (
                 <>
-                  <Link to="/">New Order</Link>
-                  <Link to="/">My Orders</Link>
+                  <Link to="/availableitems" state={createItemLinkState}>Available items</Link><br/>
+                  <Link to="/">My Orders</Link><br/>
                 </>
               )}
               {userType === 'admin' && (
                 <>
-                  <Link to="/verifyuser">Verify User</Link>
-                  <Link to="/">All Orders</Link>
+                  <Link to="/verifyuser">Verify User</Link><br/>
+                  <Link to="/">All Orders</Link><br/>
                 </>
               )}
             </>
