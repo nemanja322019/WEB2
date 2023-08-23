@@ -2,6 +2,7 @@ import { axiosClient } from "./axiosClient";
 import { API } from "../Constants/Constants";
 import jwt_decode from 'jwt-decode';
 import {
+  IGoogleToken,
     IUserLogin,
     IUserPasswordChange,
     IUserProfile,
@@ -44,6 +45,10 @@ export const isLoggedIn = () => {
 
   export const logout = () => {
     localStorage.removeItem("token")
+  };
+
+  export const LoginGoogle = async (data: IGoogleToken) => {
+    return await axiosClient.post(`${API}/users/google-login`, data);
   };
 
   export const fetchUserProfile = async (): Promise<IUserProfile | null> => {

@@ -12,5 +12,6 @@ namespace WebApplication.Interfaces
         public IEnumerable<DisplayProfileDTO> GetSellers();
         public DisplayProfileDTO VerifySeller(int id, bool isAccepted);
         public DisplayProfileDTO ChangePassword(int id,ChangePasswordDTO changePasswordDTO);
+        public  Task<string> GoogleLogin(GoogleLoginDTO googleLoginDTO);
     }
 }

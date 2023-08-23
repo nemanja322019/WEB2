@@ -41,3 +41,6 @@ export interface IUserPasswordChange{
     newpassword: string
 }
 
+export interface IGoogleToken {
+    token: string
+}

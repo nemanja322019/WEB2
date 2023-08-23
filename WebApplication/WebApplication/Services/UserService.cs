@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.Internal;
+using Google.Apis.Auth;
+using Microsoft.Extensions.Options;
+using System.Runtime;
 using System.Text.RegularExpressions;
 using WebApplication.DTO;
 using WebApplication.DTO.UserDTO;
@@ -15,12 +18,14 @@ namespace WebApplication.Services
         private readonly IMapper _mapper;
         private readonly WebApplicationDbContext _dbContext;
         private readonly ITokenService _tokenService;
+        private readonly IConfiguration _configuration;
 
-        public UserService(IMapper mapper, WebApplicationDbContext dbContext, ITokenService tokenService)
+        public UserService(IMapper mapper, WebApplicationDbContext dbContext, ITokenService tokenService, IConfiguration configuration)
         {
             _mapper = mapper;
             _dbContext = dbContext;
             _tokenService = tokenService;
+            _configuration = configuration;
         }
 
         public IEnumerable<DisplayProfileDTO> GetSellers()
@@ -150,6 +155,41 @@ namespace WebApplication.Services
             _dbContext.SaveChanges();
             
             
+        }
+
+        public async Task<string> GoogleLogin(GoogleLoginDTO googleLoginDTO)
+        {
+            var settings = new GoogleJsonWebSignature.ValidationSettings()
+            {
+                Audience = new List<string>() { _configuration["GoogleAuth:GoogleClientId"] }
+            };
+
+            var response = await GoogleJsonWebSignature.ValidateAsync(googleLoginDTO.Token, settings);
+
+            User user =  FindByEmail(response.Email);
+            if (user != null)
+            {
+                return _tokenService.CreateToken(user.Id, user.Username, user.UserType);
+            }
+
+            User newUser = new User()
+            {
+                Email = response.Email,
+                Name = response.GivenName,
+                LastName = response.FamilyName,
+                Address = "No Address",
+                BirthDate = DateTime.Parse("2000-01-01"),
+                Password = BCrypt.Net.BCrypt.HashPassword("", BCrypt.Net.BCrypt.GenerateSalt()),
+                // ImageSource = response.Picture,
+                UserType = UserTypes.CUSTOMER,
+                IsVerified = false,
+                VerificationStatus = VerificationStatus.ACCEPTED
+            };
+            _dbContext.Users.Add(newUser);
+            newUser.Username = newUser.Name + newUser.Id;
+            _dbContext.SaveChanges();
+
+            return _tokenService.CreateToken(newUser.Id, newUser.Username, newUser.UserType);
         }
 
         public bool ValidateFields(UpdateProfileDTO updateProfileDTO, out string message)

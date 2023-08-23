@@ -62,6 +62,17 @@ const NewOrderForm: React.FC = () => {
         <div>
             <h2>Order Overview</h2>
             {error && <p style={{ color: 'red' }}>{error}</p>}
+            <div>
+                <h3>Order Items:</h3>
+                <ul>
+                    {mergedOrderItems.map((item, index) => (
+                        <li key={index}>
+                            <p>Item ID: {item.itemId}</p>
+                            <p>Amount: {item.amount}</p>
+                        </li>
+                    ))}
+                </ul>
+            </div>
             <button onClick={handleNewOrder}>Confirm</button>
             <button onClick={handleDiscard}>Discard</button>
         </div>

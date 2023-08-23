@@ -11,6 +11,11 @@ import EditItemsPage from "./Pages/EditItemsPage";
 import EditItemPage from "./Pages/EditItemPage";
 import AvailableItemsPage from "./Pages/AvailableItemsPage";
 import NewOrderPage from "./Pages/NewOrderPage";
+import SellerNewOrdersPage from "./Pages/SellerNewOrdersPage";
+import SellerOldOrdersPage from "./Pages/SellerOldOrdersPage";
+import AdminOrdersPage from "./Pages/AdminOrdersPage";
+import CustomerOngoingOrdersPage from "./Pages/CustomerOngoingOrdersPage";
+import CustomerDeliveredOrdersPage from "./Pages/CustomerDeliveredOrdersPage";
 
 const AppRoutes: FC = () => {
   return (
@@ -28,6 +33,11 @@ const AppRoutes: FC = () => {
         <Route path="/edititem" element={<EditItemPage />} />
         <Route path="/availableitems" element={<AvailableItemsPage />} />
         <Route path="/neworder" element={<NewOrderPage />} />
+        <Route path="/sellerneworders" element={<SellerNewOrdersPage />} />
+        <Route path="/selleroldorders" element={<SellerOldOrdersPage />} />
+        <Route path="/adminorders" element={<AdminOrdersPage />} />
+        <Route path="/ongoingorders" element={<CustomerOngoingOrdersPage />} />
+        <Route path="/deliveredorders" element={<CustomerDeliveredOrdersPage />} />
         </Routes>
     </Router>
     );

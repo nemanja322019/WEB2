@@ -127,6 +127,21 @@ namespace WebApplication.Controllers
             }
         }
 
-        
+        [HttpPost("google-login")]
+        public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDTO googleLoginDTO)
+        {
+            try
+            {
+                string token = await _userService.GoogleLogin(googleLoginDTO);
+                return Ok(token);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+
+
+
     }
 }

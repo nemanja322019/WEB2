@@ -33,20 +33,21 @@ const Dashboard: React.FC = () => {
                 <>
                   <Link to="/createitem" state={createItemLinkState}>Create Item</Link><br/>
                   <Link to="/edititems" state={createItemLinkState}>Edit Items</Link><br/>
-                  <Link to="/">New Orders</Link><br/>
-                  <Link to="/">Old Orders</Link><br/>
+                  <Link to="/sellerneworders" state={createItemLinkState}>New Orders</Link><br/>
+                  <Link to="/selleroldorders" state={createItemLinkState}>Old Orders</Link><br/>
                 </>
               )}
               {userType === 'customer' && (
                 <>
                   <Link to="/availableitems" state={createItemLinkState}>Available items</Link><br/>
-                  <Link to="/">My Orders</Link><br/>
+                  <Link to="/ongoingorders" state={createItemLinkState}>Ongoing Orders</Link><br/>
+                  <Link to="/deliveredorders" state={createItemLinkState}>Delivered Orders</Link><br/>
                 </>
               )}
               {userType === 'admin' && (
                 <>
                   <Link to="/verifyuser">Verify User</Link><br/>
-                  <Link to="/">All Orders</Link><br/>
+                  <Link to="/adminorders">All Orders</Link><br/>
                 </>
               )}
             </>

@@ -70,3 +70,8 @@ C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\ru
 C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\BCrypt.Net-Next.dll
 C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.Google.dll
+C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\Google.Apis.dll
+C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\Google.Apis.Auth.PlatformServices.dll
+C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\Google.Apis.Auth.dll
+C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\Google.Apis.Core.dll
+C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\Newtonsoft.Json.dll

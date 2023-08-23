@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { IUserLogin } from "../../Shared/Interfaces/userInterfaces";
-import { Login } from '../../Services/UserService'; 
+import { IGoogleToken, IUserLogin } from "../../Shared/Interfaces/userInterfaces";
+import { Login, LoginGoogle } from '../../Services/UserService'; 
 import { useNavigate  } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -29,6 +30,22 @@ const LoginForm = () => {
     }
   };
 
+  const responseMessage = async (response: any) => {
+    try{
+    const googleToken: IGoogleToken = {
+      token: response.credential
+    } 
+    const responseData = await LoginGoogle(googleToken)
+    const token = responseData.data;
+    localStorage.setItem('token', token);
+    
+    navigate('/dashboard');
+  }
+  catch(err:any){
+    setError(err.response?.data?.error || 'An error occurred'); 
+  }
+  };
+
   return (
     <div>
       <h2>Login</h2>
@@ -52,6 +69,13 @@ const LoginForm = () => {
         </div>
         <button type="submit">Login</button>
       </form>
+      <GoogleLogin
+  onSuccess={responseMessage}
+  onError={() => {
+    console.log('Login Failed');
+    setError('Google login failed!')
+  }}
+/>
     </div>
   );
 };
