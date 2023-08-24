@@ -3,6 +3,7 @@ import { IOrder } from '../../Shared/Interfaces/orderInterfaces';
 import { CancelOrder, GetOngoingOrdersFromCustomer } from '../../Services/OrderService';
 import { useLocation } from 'react-router-dom';
 import { IUserProfile } from '../../Shared/Interfaces/userInterfaces';
+import './CustomerOrders.css'
 
 const CustomerOngoingOrdersForm: React.FC = () => {
     const location = useLocation();
@@ -35,12 +36,12 @@ const CustomerOngoingOrdersForm: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Ongoing orders:</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <ul>
+      {error && <p className="error-message">{error}</p>}
+      <ul className="orders-list">
         {orders.map((order) => (
-          <li key={order.id}>
+          <li className="order-item" key={order.id}>
             <p>Order ID: {order.id}</p>
             <p>Comment: {order.comment}</p>
             <p>Address: {order.address}</p>
@@ -52,7 +53,7 @@ const CustomerOngoingOrdersForm: React.FC = () => {
             <p>
               Ordered Items: {order.orderItems.map((item) => item.itemName).join(', ')}
             </p>
-            <button onClick={() => handleCancel(order)}>Cancel</button>
+            <button className="cancel-button" onClick={() => handleCancel(order)}>Cancel</button>
           </li>
         ))}
       </ul>

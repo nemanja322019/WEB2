@@ -5,7 +5,8 @@ export interface ICreateItem {
     price: number,
     amount: number,
     description: string,
-    sellerid: number
+    sellerid: number,
+    image: string
 }
 
 export interface IDisplayItem {
@@ -13,7 +14,8 @@ export interface IDisplayItem {
     itemName: string,
     price: number,
     amount: number,
-    description: string
+    description: string,
+    image: string
 }
 
 export interface IEditItem {
@@ -21,4 +23,5 @@ export interface IEditItem {
     price: number,
     amount: number,
     description: string,
+    image: string
 }

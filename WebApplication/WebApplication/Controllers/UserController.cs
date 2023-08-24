@@ -12,10 +12,14 @@ namespace WebApplication.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _configuration;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IWebHostEnvironment env, IConfiguration configuration)
         {
             _userService = userService;
+            _env = env;
+            _configuration = configuration;
         }
 
         [HttpGet("{id}")]
@@ -40,6 +44,24 @@ namespace WebApplication.Controllers
         {
             try
             {
+                if (!string.IsNullOrWhiteSpace(updateProfileDTO.Image))
+                {
+                    string base64WithoutPrefix = updateProfileDTO.Image.Replace("data:image/jpeg;base64,", "");
+                    byte[] imageBytes = Convert.FromBase64String(base64WithoutPrefix);
+
+                    string webRootPath = _env.WebRootPath;
+
+                    string imageName = Guid.NewGuid().ToString() + ".jpg";
+                    string imagePath = Path.Combine(webRootPath, "slike", imageName);
+
+                    System.IO.File.WriteAllBytes(imagePath, imageBytes);
+
+                    string backendBaseUrl = _configuration.GetSection("UrlPath").Value;
+                    string imageUrl = $"{backendBaseUrl}/slike/{imageName}";
+
+                    updateProfileDTO.Image = imageUrl;
+                }
+
                 DisplayProfileDTO displayProfileDTO = _userService.UpdateProfile(id, updateProfileDTO);
                 return Ok(displayProfileDTO);
             }
@@ -117,12 +139,31 @@ namespace WebApplication.Controllers
         {
             try
             {
+                if (!string.IsNullOrWhiteSpace(registerDTO.Image))
+                {
+                    string base64WithoutPrefix = registerDTO.Image.Replace("data:image/jpeg;base64,", "");
+                    byte[] imageBytes = Convert.FromBase64String(base64WithoutPrefix);
+
+                    string webRootPath = _env.WebRootPath;
+
+                    string imageName = Guid.NewGuid().ToString() + ".jpg";
+                    string imagePath = Path.Combine(webRootPath, "slike", imageName);
+
+                    System.IO.File.WriteAllBytes(imagePath, imageBytes);
+
+                    string backendBaseUrl = _configuration.GetSection("UrlPath").Value;
+                    string imageUrl = $"{backendBaseUrl}/slike/{imageName}";
+
+                    registerDTO.Image = imageUrl;
+                }
+
+
                 _userService.RegisterUser(registerDTO);
+
                 return Ok();
             }
             catch (Exception ex)
             {
-
                 return BadRequest(new { Error = ex.Message });
             }
         }

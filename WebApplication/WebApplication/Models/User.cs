@@ -18,6 +18,6 @@ namespace WebApplication.Models
         public VerificationStatus VerificationStatus { get; set; }
         public bool IsVerified { get; set; }
 
-        //public byte[] Image { get; set; }
+        public string Image { get; set; }
     }
 }

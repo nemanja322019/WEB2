@@ -75,3 +75,4 @@ C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\Go
 C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\Google.Apis.Auth.dll
 C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\Google.Apis.Core.dll
 C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Nex\Desktop\Web2\WEB2\WebApplication\WebApplication\bin\Debug\net6.0\WebApplication.staticwebassets.runtime.json

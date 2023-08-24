@@ -63,6 +63,10 @@ namespace WebApplication.Services
             item.Description = updateItemDTO.Description;
             item.Price = updateItemDTO.Price;
             item.Amount = updateItemDTO.Amount;
+            if (!String.IsNullOrEmpty(updateItemDTO.Image))
+            {
+                item.Image = updateItemDTO.Image;
+            }
             _dbContext.SaveChanges();
 
             return _mapper.Map<DisplayItemDTO>(item);

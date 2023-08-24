@@ -21,6 +21,7 @@ const EditItemList: React.FC = () => {
                 price: displayItem.price,
                 amount: displayItem.amount,
                 description: displayItem.description,
+                image: displayItem.image
               };
             });
             setItemsList(items);
@@ -44,24 +45,32 @@ const EditItemList: React.FC = () => {
       };
 
       return (
-        <div>
+        <div className="edit-item-list-container"> {/* Add a class name for the container */}
           <h2>All items from seller</h2>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          <ul>
+          {error && <p className="error-message">{error}</p>} {/* Add a class for the error message */}
+          <ul className="items-list"> {/* Add a class for the items list */}
             {itemsList.map((item) => (
-              <li key={item.id}>
-                <p>Item name: {item.itemName}</p>
+              <li key={item.id} className="item">
+                <p className="item-name">Item name: {item.itemName}</p>
                 <p>Price: {item.price}</p>
                 <p>Amount: {item.amount}</p>
                 <p>Description: {item.description}</p>
-
-                <button onClick={() => handleEdit(item)}>Edit</button>
-                <button onClick={() => handleDelete(item)}>Delete</button>
+                {item && item.image && (
+                  <img
+                    src={item.image}
+                    alt="No Image"
+                    style={{ maxWidth: '100px' }}
+                    className="item-image"
+                  />
+                )}
+                <div>
+                <button className="edit-button" onClick={() => handleEdit(item)}>Edit</button>
+                <button className="delete-button" onClick={() => handleDelete(item)}>Delete</button></div>
               </li>
             ))}
           </ul>
         </div>
       );
-};
+    };
 
 export default EditItemList;

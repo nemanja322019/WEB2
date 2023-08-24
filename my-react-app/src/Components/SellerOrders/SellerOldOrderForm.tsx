@@ -3,6 +3,7 @@ import { IOrder } from '../../Shared/Interfaces/orderInterfaces';
 import { GetOldOrdersFromSeller } from '../../Services/OrderService';
 import { useLocation } from 'react-router-dom';
 import { IUserProfile } from '../../Shared/Interfaces/userInterfaces';
+import './SellerOrders.css'; 
 
 const SellerNewOrdersForm: React.FC = () => {
     const location = useLocation();
@@ -24,12 +25,12 @@ const SellerNewOrdersForm: React.FC = () => {
   }, [userProfile.id]);
 
   return (
-    <div>
-      <h2>Old Orders</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <ul>
+    <div className="container">
+      <h2>New Orders</h2>
+      {error && <p className="error-message">{error}</p>}
+      <ul className="orders-list">
         {orders.map((order) => (
-          <li key={order.id}>
+          <li key={order.id} className="order-item">
             <p>Order ID: {order.id}</p>
             <p>Comment: {order.comment}</p>
             <p>Address: {order.address}</p>

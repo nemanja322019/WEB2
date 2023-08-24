@@ -5,6 +5,7 @@ import { GetItems } from '../../Services/ItemService';
 import { IUserProfile } from '../../Shared/Interfaces/userInterfaces';
 import { IOrderItem } from '../../Shared/Interfaces/orderInterfaces';
 import AmountModal from './AmountModal'; 
+import './AvailableItemsForm.css'; 
 
 const AvailableItemsForm: React.FC = () => {
     const location = useLocation();
@@ -27,6 +28,7 @@ const AvailableItemsForm: React.FC = () => {
                 price: displayItem.price,
                 amount: displayItem.amount,
                 description: displayItem.description,
+                image: displayItem.image
               };
             });
             setItemsList(items);
@@ -61,39 +63,42 @@ const AvailableItemsForm: React.FC = () => {
       };
 
       return (
-        <div>
+        <div className="available-items-container">
           <h2>All available items</h2>
-          <ul>
-            {itemsList.map((item) => (
-              <li key={item.id}>
-                <p>Item name: {item.itemName}</p>
-                <p>Price: {item.price}</p>
-                <p>Available: {item.amount}</p>
-                <p>Description: {item.description}</p>
-                
-                <button onClick={() => handleBasket(item)}>Add to basket</button>
-              </li>
-            ))}
-          </ul>
-          <div>
-              <label>Comment:</label>
-              <input
-                  type="text"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-              />
-              <button onClick={handleOrder}>Order</button>
-
-
-              {isModalOpen && (
-        <AmountModal
-          onClose={handleModalClose}
-          onSave={handleModalSave}
-        />
-      )}
+          <div className="order-section">
+            <label className="comment-label">Comment:</label>
+            <input
+              className="comment-input"
+              type="text"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+            <button className="order-button" onClick={handleOrder}>Order</button>
+            {isModalOpen && (
+              <AmountModal onClose={handleModalClose} onSave={handleModalSave} />
+            )}
           </div>
+          <div className="items-list">
+            {itemsList.map((item) => (
+              <div key={item.id} className="item-box">
+                <div className="item-info">
+                  <p className="item-name">{item.itemName}</p>
+                  <p className="item-price">Price: {item.price}</p>
+                  <p className="item-amount">Available: {item.amount}</p>
+                  <p className="item-description">{item.description}</p>
+                </div>
+                <div className="item-image">
+                  {item && item.image && (
+                    <img src={item.image} alt="No Image" />
+                  )}
+                </div>
+                <button className="add-to-basket-button" onClick={() => handleBasket(item)}>Add to basket</button>
+              </div>
+            ))}
+          </div>
+          
         </div>
       );
-};
+    };
 
 export default AvailableItemsForm;

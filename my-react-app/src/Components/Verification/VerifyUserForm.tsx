@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { GetSellers, VerifySeller } from '../../Services/UserService';
 import { IUserProfile } from '../../Shared/Interfaces/userInterfaces';
-
+import './VerifyUserForm.css'; 
 const VerifyUserForm: React.FC = () => {
   const [usersToVerify, setUsersToVerify] = useState<IUserProfile[]>([]);
 
@@ -21,6 +21,7 @@ const VerifyUserForm: React.FC = () => {
             isVerified: userProfile.isVerified,
             verificationStatus: userProfile.verificationStatus,
             userType: userProfile.userType,
+            image: userProfile.image
           };
         });
         setUsersToVerify(users);
@@ -46,18 +47,39 @@ const VerifyUserForm: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Verify User</h2>
-      <ul>
+      <ul className="user-list">
         {usersToVerify.map((user) => (
-          <li key={user.id}>
-            <p>Name: {user.name}</p>
-            <p>Last Name: {user.lastName}</p>
-            <p>Adress: {user.address}</p>
-            <p>Email: {user.email}</p>
-            <p>Status: {user.verificationStatus}</p>
-            <button onClick={() => handleVerification(user.id, true)}>Accept</button>
-            <button onClick={() => handleVerification(user.id, false)}>Reject</button>
+          <li key={user.id} className="user-item">
+            <div className="user-details">
+              <p>Name: {user.name}</p>
+              <p>Last Name: {user.lastName}</p>
+              <p>Address: {user.address}</p>
+              <p>Email: {user.email}</p>
+              <p>Status: {user.verificationStatus}</p>
+            </div>
+            {user && user.image && (
+              <img
+                src={user.image}
+                alt="No Image"
+                className="user-image"
+              />
+            )}
+            <div className="action-buttons">
+              <button
+                className="action-button"
+                onClick={() => handleVerification(user.id, true)}
+              >
+                Accept
+              </button>
+              <button
+                className="action-button reject"
+                onClick={() => handleVerification(user.id, false)}
+              >
+                Reject
+              </button>
+            </div>
           </li>
         ))}
       </ul>

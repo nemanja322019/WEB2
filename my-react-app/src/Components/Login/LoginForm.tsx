@@ -3,6 +3,7 @@ import { IGoogleToken, IUserLogin } from "../../Shared/Interfaces/userInterfaces
 import { Login, LoginGoogle } from '../../Services/UserService'; 
 import { useNavigate  } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
+import './LoginForm.css'; 
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -47,9 +48,9 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
+    <div className="login-form">
       <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p>{error}</p>}
       <form onSubmit={handleLogin}>
         <div>
           <label>Email:</label>
@@ -69,15 +70,18 @@ const LoginForm = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      <GoogleLogin
-  onSuccess={responseMessage}
-  onError={() => {
-    console.log('Login Failed');
-    setError('Google login failed!')
-  }}
-/>
+      <div className="google-login-button">
+        <GoogleLogin
+          onSuccess={responseMessage}
+          onError={() => {
+            console.log('Login Failed');
+            setError('Google login failed!')
+          }}
+        />
+      </div>
     </div>
   );
 };
+
 
 export default LoginForm;

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using WebApplication.DTO.ItemDTO;
+using WebApplication.DTO.UserDTO;
 using WebApplication.Interfaces;
 using WebApplication.Services;
 
@@ -12,9 +13,13 @@ namespace WebApplication.Controllers
     public class ItemController : Controller
     {
         private readonly IItemService _itemService;
-        public ItemController(IItemService itemService) 
+        private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _env;
+        public ItemController(IItemService itemService, IConfiguration configuration, IWebHostEnvironment env) 
         {
             _itemService = itemService;
+            _configuration = configuration;
+            _env = env;
         }
 
         [HttpPost]
@@ -23,6 +28,24 @@ namespace WebApplication.Controllers
         {
             try
             {
+                if (!string.IsNullOrWhiteSpace(createItemDTO.Image))
+                {
+                    string base64WithoutPrefix = createItemDTO.Image.Replace("data:image/jpeg;base64,", "");
+                    byte[] imageBytes = Convert.FromBase64String(base64WithoutPrefix);
+
+                    string webRootPath = _env.WebRootPath;
+
+                    string imageName = Guid.NewGuid().ToString() + ".jpg";
+                    string imagePath = Path.Combine(webRootPath, "slike", imageName);
+
+                    System.IO.File.WriteAllBytes(imagePath, imageBytes);
+
+                    string backendBaseUrl = _configuration.GetSection("UrlPath").Value;
+                    string imageUrl = $"{backendBaseUrl}/slike/{imageName}";
+
+                    createItemDTO.Image = imageUrl;
+                }
+
                 DisplayItemDTO displayItemDTO = _itemService.CreateItem(createItemDTO);
                 return Ok(displayItemDTO);
             }
@@ -39,6 +62,24 @@ namespace WebApplication.Controllers
         {
             try
             {
+                if (!string.IsNullOrWhiteSpace(updateItemDTO.Image))
+                {
+                    string base64WithoutPrefix = updateItemDTO.Image.Replace("data:image/jpeg;base64,", "");
+                    byte[] imageBytes = Convert.FromBase64String(base64WithoutPrefix);
+
+                    string webRootPath = _env.WebRootPath;
+
+                    string imageName = Guid.NewGuid().ToString() + ".jpg";
+                    string imagePath = Path.Combine(webRootPath, "slike", imageName);
+
+                    System.IO.File.WriteAllBytes(imagePath, imageBytes);
+
+                    string backendBaseUrl = _configuration.GetSection("UrlPath").Value;
+                    string imageUrl = $"{backendBaseUrl}/slike/{imageName}";
+
+                    updateItemDTO.Image = imageUrl;
+                }
+
                 DisplayItemDTO displayItemDTO = _itemService.UpdateItem(id, updateItemDTO);
                 return Ok(displayItemDTO);
             }
@@ -88,6 +129,12 @@ namespace WebApplication.Controllers
             try
             {
                 IEnumerable<DisplayItemDTO> items = _itemService.GetItemsFromSeller(id);
+
+                foreach(DisplayItemDTO item in items)
+                {
+                    
+                }
+
                 return Ok(items);
             }
             catch (Exception ex)

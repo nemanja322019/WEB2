@@ -73,6 +73,9 @@ namespace WebApplication.Services
             user.LastName = updateProfileDTO.LastName;
             user.Address = updateProfileDTO.Address;
             user.BirthDate = updateProfileDTO.BirthDate;
+            if(!String.IsNullOrEmpty(updateProfileDTO.Image)){
+                user.Image = updateProfileDTO.Image;
+            }
             _dbContext.SaveChanges();
 
             return _mapper.Map<DisplayProfileDTO>(user);

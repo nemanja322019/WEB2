@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
-import LogoutButton from '../../Components/Login/LogoutButton';
 import { IUserProfile, IUserUpdate } from '../../Shared/Interfaces/userInterfaces';
 import { GetUserById, UpdateProfile } from '../../Services/UserService';
 import { useNavigate } from 'react-router-dom';
 import ChangePasswordForm from './ChangePasswordForm'; 
+import './ProfileForm.css'; 
 
 const ProfileForm: React.FC = () => {
   const [userProfile, setUserProfile] = useState<IUserProfile | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
+
+  const [selectedImage, setSelectedImage] = useState<File | null>(null); 
   
   const token = localStorage.getItem('token');
 
@@ -30,21 +32,51 @@ const ProfileForm: React.FC = () => {
     }
   }, [token]);
 
+  const handleImageChange = (files: FileList | null) => {
+    if (files && files.length > 0) {
+      setSelectedImage(files[0]);
+    } else {
+      setSelectedImage(null);
+    }
+  };
 
   const handleProfileUpdate = async  (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-        const userUpdateData: IUserUpdate = {
-            name: userProfile?.name || '',
-            lastName: userProfile?.lastName || '',
-            birthDate: userProfile?.birthDate || new Date(),
-            address: userProfile?.address || ''
+      const userUpdateData: IUserUpdate = {
+        name: userProfile?.name || '',
+        lastName: userProfile?.lastName || '',
+        birthDate: userProfile?.birthDate || new Date(),
+        address: userProfile?.address || '',
+        image: ''
+      };
+  
+      if (selectedImage) {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          const imageBase64 = e.target?.result as string;
+          userUpdateData.image = imageBase64;
+          setError('');
+  
+          const response = await UpdateProfile(
+            userProfile?.id || 0,
+            userUpdateData
+          );
+          const updatedUserProfile = await GetUserById(userProfile?.id || 0);
+          setUserProfile(updatedUserProfile.data);
         };
+        reader.readAsDataURL(selectedImage);
+      } else {
         setError('');
-        const response = await  UpdateProfile(userProfile?.id || 0, userUpdateData);
-        //navigate('/');
-
-      } catch (err: any) {
+  
+        const response = await UpdateProfile(
+          userProfile?.id || 0,
+          userUpdateData
+        );
+        const updatedUserProfile = await GetUserById(userProfile?.id || 0);
+        setUserProfile(updatedUserProfile.data);
+      }
+    } catch (err: any) {
         console.log('Error response:', err.response.data);
         setError(err.response?.data?.error || 'An error occurred');
       }
@@ -53,13 +85,14 @@ const ProfileForm: React.FC = () => {
 
 
     return (
-        <div>
-        <LogoutButton />
+      <div className="profile-form">
         {userProfile ? (
           <div>
             <h2>Profile</h2>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleProfileUpdate}>
+            <div className="form-columns">
+              <div className="form-column">
             <p>User ID: {userProfile.id}</p>
             <label>
               Name:
@@ -122,9 +155,31 @@ const ProfileForm: React.FC = () => {
               />
             </label>
             <p>Verification status: {userProfile.verificationStatus}</p>
-            <button type="submit">Edit</button>
+            </div>
+            <div className="form-column2">
+              <label> Profile Image  </label>
+            {userProfile && userProfile.image && (
+              <img
+                src={userProfile.image}
+                alt="Profile Image"
+                className="profile-image"
+              />
+            )}
+              <label className="custom-file-upload">
+                Upload Image
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageChange(e.target.files)}
+                />
+              </label>
+              <div>
+            <button type="submit" className="edit-button">Edit</button></div></div>
+            </div>
             </form>
+            <div className="password-form">
             <ChangePasswordForm userProfile={userProfile} />
+            </div>
           </div>
         ) : (
           <p>Loading...</p>

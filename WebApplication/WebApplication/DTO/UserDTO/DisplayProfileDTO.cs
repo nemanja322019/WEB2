@@ -13,5 +13,6 @@
         public bool IsVerified { get; set; }
         public string VerificationStatus { get; set; }
         public string UserType { get; set; }
+        public string Image { get; set; }
     }
 }

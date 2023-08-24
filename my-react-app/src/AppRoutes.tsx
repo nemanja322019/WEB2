@@ -16,10 +16,12 @@ import SellerOldOrdersPage from "./Pages/SellerOldOrdersPage";
 import AdminOrdersPage from "./Pages/AdminOrdersPage";
 import CustomerOngoingOrdersPage from "./Pages/CustomerOngoingOrdersPage";
 import CustomerDeliveredOrdersPage from "./Pages/CustomerDeliveredOrdersPage";
+import Taskbar from "./Components/Taskbar";
 
 const AppRoutes: FC = () => {
   return (
     <Router>
+      <Taskbar/>
         <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/homepage" element={<HomePage />} />

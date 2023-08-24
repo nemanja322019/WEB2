@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { IUserProfile } from '../../Shared/Interfaces/userInterfaces';
 import { NewOrder } from '../../Services/OrderService';
 import { IOrderItem } from '../../Shared/Interfaces/orderInterfaces';
-
+import './NewOrderForm.css';
 
 const NewOrderForm: React.FC = () => {
     const location = useLocation();
@@ -59,24 +59,30 @@ const NewOrderForm: React.FC = () => {
     };
 
     return (
-        <div>
-            <h2>Order Overview</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <div>
-                <h3>Order Items:</h3>
-                <ul>
-                    {mergedOrderItems.map((item, index) => (
-                        <li key={index}>
-                            <p>Item ID: {item.itemId}</p>
-                            <p>Amount: {item.amount}</p>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <button onClick={handleNewOrder}>Confirm</button>
-            <button onClick={handleDiscard}>Discard</button>
+        <div className="container">
+          <h2>Order Overview</h2>
+          {error && <p className="error-message">{error}</p>}
+          <div className="order-items">
+            <h3>Order Items:</h3>
+            <ul>
+              {mergedOrderItems.map((item, index) => (
+                <li className="order-item" key={index}>
+                  <p>Item ID: {item.itemId}</p>
+                  <p>Amount: {item.amount}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="action-buttons">
+            <button className="action-button" onClick={handleNewOrder}>
+              Confirm
+            </button>
+            <button className="action-button" onClick={handleDiscard}>
+              Discard
+            </button>
+          </div>
         </div>
-    );
-};
+      );
+    };
 
 export default NewOrderForm;

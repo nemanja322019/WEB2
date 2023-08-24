@@ -9,8 +9,7 @@
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public string Address { get; set; }
-        //public byte[] Image { get; set; }
-
         public string UserType { get; set; }
+        public string Image { get; set; }
     }
 }

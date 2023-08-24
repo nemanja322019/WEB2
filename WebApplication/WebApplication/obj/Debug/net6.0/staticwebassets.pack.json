@@ -1,0 +1,57 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Nex\\Desktop\\Web2\\WEB2\\WebApplication\\WebApplication\\wwwroot\\slike\\025abdf1-51df-416c-befd-9a914f684991.jpg",
+      "PackagePath": "staticwebassets\\slike\\025abdf1-51df-416c-befd-9a914f684991.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Nex\\Desktop\\Web2\\WEB2\\WebApplication\\WebApplication\\wwwroot\\slike\\41d0c86f-7430-4955-a9a3-447b56fa6b7b.jpg",
+      "PackagePath": "staticwebassets\\slike\\41d0c86f-7430-4955-a9a3-447b56fa6b7b.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Nex\\Desktop\\Web2\\WEB2\\WebApplication\\WebApplication\\wwwroot\\slike\\4f8805d4-e3de-48fe-a2cd-23199a684baa.jpg",
+      "PackagePath": "staticwebassets\\slike\\4f8805d4-e3de-48fe-a2cd-23199a684baa.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Nex\\Desktop\\Web2\\WEB2\\WebApplication\\WebApplication\\wwwroot\\slike\\5f8c96bd-d10f-4f27-a460-431c39308534.jpg",
+      "PackagePath": "staticwebassets\\slike\\5f8c96bd-d10f-4f27-a460-431c39308534.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Nex\\Desktop\\Web2\\WEB2\\WebApplication\\WebApplication\\wwwroot\\slike\\5fbb4b31-30ce-4fa3-8d39-c711dd1fa9fd.jpg",
+      "PackagePath": "staticwebassets\\slike\\5fbb4b31-30ce-4fa3-8d39-c711dd1fa9fd.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Nex\\Desktop\\Web2\\WEB2\\WebApplication\\WebApplication\\wwwroot\\slike\\75519df3-099f-48c3-b8ed-d6d36c46ccae.jpg",
+      "PackagePath": "staticwebassets\\slike\\75519df3-099f-48c3-b8ed-d6d36c46ccae.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Nex\\Desktop\\Web2\\WEB2\\WebApplication\\WebApplication\\wwwroot\\slike\\772e03df-d7d7-40cf-a4d5-dee2367b4028.jpg",
+      "PackagePath": "staticwebassets\\slike\\772e03df-d7d7-40cf-a4d5-dee2367b4028.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Nex\\Desktop\\Web2\\WEB2\\WebApplication\\WebApplication\\wwwroot\\slike\\f489ca0f-4800-4d3f-930c-d87cea06d606.jpg",
+      "PackagePath": "staticwebassets\\slike\\f489ca0f-4800-4d3f-930c-d87cea06d606.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Nex\\Desktop\\Web2\\WEB2\\WebApplication\\WebApplication\\wwwroot\\slike\\fc41312d-4660-4875-a306-adf861bc05cd.jpg",
+      "PackagePath": "staticwebassets\\slike\\fc41312d-4660-4875-a306-adf861bc05cd.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.WebApplication.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.WebApplication.props",
+      "PackagePath": "build\\WebApplication.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.WebApplication.props",
+      "PackagePath": "buildMultiTargeting\\WebApplication.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.WebApplication.props",
+      "PackagePath": "buildTransitive\\WebApplication.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

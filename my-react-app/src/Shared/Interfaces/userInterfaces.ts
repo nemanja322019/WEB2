@@ -5,6 +5,7 @@ export interface IUserLogin {
     password: string
 }
 
+
 export interface IUserRegister {
     username: string,
     email: string,
@@ -13,7 +14,8 @@ export interface IUserRegister {
     lastName: string,
     birthDate: Date,
     address: string,
-    userType: UserTypes
+    userType: UserTypes,
+    image: string
 }
 
 export interface IUserProfile {
@@ -26,14 +28,16 @@ export interface IUserProfile {
     address: string,
     isVerified: boolean,
     verificationStatus: VerificationStatus,
-    userType: UserTypes
+    userType: UserTypes,
+    image: string
 }
 
 export interface IUserUpdate{
     name: string,
     lastName: string,
     birthDate: Date,
-    address: string
+    address: string,
+    image: string
 }
 
 export interface IUserPasswordChange{

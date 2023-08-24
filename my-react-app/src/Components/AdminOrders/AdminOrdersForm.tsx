@@ -22,12 +22,12 @@ const AllOrderForms: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h2>All Orders</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <ul>
+    <div className="container">
+      <h2>New Orders</h2>
+      {error && <p className="error-message">{error}</p>}
+      <ul className="orders-list">
         {orders.map((order) => (
-          <li key={order.id}>
+          <li key={order.id} className="order-item">
             <p>Order ID: {order.id}</p>
             <p>Comment: {order.comment}</p>
             <p>Address: {order.address}</p>
@@ -37,8 +37,7 @@ const AllOrderForms: React.FC = () => {
             <p>Is Canceled: {order.isCanceled ? 'Yes' : 'No'}</p>
             <p>Order Status: {order.status}</p>
             <p>
-            Ordered Items:{" "}
-            {order.orderItems.map((item) => item.itemName).join(", ")}
+              Ordered Items: {order.orderItems.map((item) => item.itemName).join(', ')}
             </p>
           </li>
         ))}

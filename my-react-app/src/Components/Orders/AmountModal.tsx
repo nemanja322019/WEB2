@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './AmountModal.css';
 
 interface AmountModalProps {
   onClose: () => void;
