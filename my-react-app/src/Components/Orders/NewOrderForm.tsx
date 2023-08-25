@@ -64,6 +64,7 @@ const NewOrderForm: React.FC = () => {
           {error && <p className="error-message">{error}</p>}
           <div className="order-items">
             <h3>Order Items:</h3>
+            <h5>Shipping price: 200</h5>
             <ul>
               {mergedOrderItems.map((item, index) => (
                 <li className="order-item" key={index}>

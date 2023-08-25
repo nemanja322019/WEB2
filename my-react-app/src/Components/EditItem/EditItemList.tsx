@@ -3,6 +3,7 @@ import { IDisplayItem } from '../../Shared/Interfaces/itemInterfaces';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { DeleteItem, GetItemsForSeller } from '../../Services/ItemService';
 import { IUserProfile } from '../../Shared/Interfaces/userInterfaces';
+import './EditItemList.css'; 
 
 const EditItemList: React.FC = () => {
     const location = useLocation();
@@ -45,16 +46,16 @@ const EditItemList: React.FC = () => {
       };
 
       return (
-        <div className="edit-item-list-container"> {/* Add a class name for the container */}
+        <div className="available-items-container"> {/* Add a class name for the container */}
           <h2>All items from seller</h2>
           {error && <p className="error-message">{error}</p>} {/* Add a class for the error message */}
           <ul className="items-list"> {/* Add a class for the items list */}
             {itemsList.map((item) => (
-              <li key={item.id} className="item">
+              <li key={item.id} className="item-box">
                 <p className="item-name">Item name: {item.itemName}</p>
-                <p>Price: {item.price}</p>
-                <p>Amount: {item.amount}</p>
-                <p>Description: {item.description}</p>
+                <p className="item-price">Price: {item.price}</p>
+                <p className="item-amount">Amount: {item.amount}</p>
+                <p className="item-description">Description: {item.description}</p>
                 {item && item.image && (
                   <img
                     src={item.image}
@@ -64,8 +65,8 @@ const EditItemList: React.FC = () => {
                   />
                 )}
                 <div>
-                <button className="edit-button" onClick={() => handleEdit(item)}>Edit</button>
-                <button className="delete-button" onClick={() => handleDelete(item)}>Delete</button></div>
+                <button className="add-to-basket-buttons" onClick={() => handleEdit(item)}>Edit</button>
+                <button className="add-to-basket-buttons1" onClick={() => handleDelete(item)}>Delete</button></div>
               </li>
             ))}
           </ul>

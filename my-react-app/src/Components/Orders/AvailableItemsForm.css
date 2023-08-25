@@ -49,7 +49,7 @@
   .add-to-basket-button {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #007bff;
+    background-color: #656e78;
     color: white;
     border: none;
     border-radius: 5px;
@@ -59,7 +59,7 @@
   }
   
   .add-to-basket-button:hover {
-    background-color: #0056b3;
+    background-color: #2a2c2e;
     transform: scale(1.05);
   }
   

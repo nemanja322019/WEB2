@@ -23,7 +23,7 @@ const AllOrderForms: React.FC = () => {
 
   return (
     <div className="container">
-      <h2>New Orders</h2>
+      <h2>All Orders</h2>
       {error && <p className="error-message">{error}</p>}
       <ul className="orders-list">
         {orders.map((order) => (

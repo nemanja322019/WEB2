@@ -183,7 +183,7 @@ namespace WebApplication.Services
                 Address = "No Address",
                 BirthDate = DateTime.Parse("2000-01-01"),
                 Password = BCrypt.Net.BCrypt.HashPassword("", BCrypt.Net.BCrypt.GenerateSalt()),
-                // ImageSource = response.Picture,
+                Image = response.Picture,
                 UserType = UserTypes.CUSTOMER,
                 IsVerified = false,
                 VerificationStatus = VerificationStatus.ACCEPTED

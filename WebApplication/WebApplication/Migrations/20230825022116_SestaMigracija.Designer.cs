@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication.Infrastructure;
 
@@ -11,9 +12,10 @@ using WebApplication.Infrastructure;
 namespace WebApplication.Migrations
 {
     [DbContext(typeof(WebApplicationDbContext))]
-    partial class WebApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230825022116_SestaMigracija")]
+    partial class SestaMigracija
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,7 +187,7 @@ namespace WebApplication.Migrations
                     b.HasOne("WebApplication.Models.User", "Seller")
                         .WithMany("Items")
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Seller");
@@ -207,7 +209,6 @@ namespace WebApplication.Migrations
                     b.HasOne("WebApplication.Models.Item", "Item")
                         .WithMany("OrderItems")
                         .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("WebApplication.Models.Order", "Order")

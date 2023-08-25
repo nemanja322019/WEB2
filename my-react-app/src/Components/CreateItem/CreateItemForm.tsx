@@ -3,7 +3,7 @@ import { ICreateItem } from '../../Shared/Interfaces/itemInterfaces';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CreateItem } from '../../Services/ItemService';
 import { IUserProfile } from '../../Shared/Interfaces/userInterfaces';
-
+import './CreateItemForm.css'; 
 
 const CreateItemForm: React.FC = () => {
     const location = useLocation();
@@ -13,6 +13,7 @@ const CreateItemForm: React.FC = () => {
     const [amount, setAmount] = useState<number>(0)
     const [description, setDescription] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const [selectedImage, setSelectedImage] = useState<File | null>(null); 
 
@@ -43,6 +44,7 @@ const CreateItemForm: React.FC = () => {
                 
                 const response = await CreateItem(itemData);
                 console.log("Item added!"); 
+                navigate('/edititems', { state: { userProfile } });
               };
               reader.readAsDataURL(selectedImage);
             } else {
@@ -56,6 +58,7 @@ const CreateItemForm: React.FC = () => {
               };
         
               const response = await CreateItem(itemData);
+              navigate('/edititems', { state: { userProfile } });
             }
           }
          catch (err: any) {
@@ -70,7 +73,7 @@ const CreateItemForm: React.FC = () => {
           {error && <p className="error-message">{error}</p>}
           <form onSubmit={handleCreateItem}>
             <div className="form-group">
-              <label>Item name:</label>
+              <label >Item name:</label>
               <input
                 type="text"
                 value={itemName}
@@ -102,16 +105,16 @@ const CreateItemForm: React.FC = () => {
               />
             </div>
             <div className="form-group">
-              <label>
+              <label className="custom-file-upload">
                 Item Image:
                 <input
                   type="file"
                   accept="image/*"
                   onChange={(e) => handleImageChange(e.target.files)}
                 />
-              </label>
+              </label><button type="submit" className="button-sss">Create Item</button>
             </div>
-            <button type="submit">Create Item</button>
+            
           </form>
         </div>
       );

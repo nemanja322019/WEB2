@@ -119,6 +119,7 @@ const EditItemForm: React.FC = () => {
               className="image-preview"
             />
           )}
+          <div>
           <label className="custom-file-upload">
             New Item Image:
             <input
@@ -127,7 +128,8 @@ const EditItemForm: React.FC = () => {
               onChange={(e) => handleImageChange(e.target.files)}
             />
           </label>
-          <button type="submit" className="submit-button">Edit</button>
+          
+          <button type="submit" className="button-sss">Edit</button></div>
         </form>
       </div>
     );
