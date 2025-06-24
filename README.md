@@ -51,20 +51,20 @@ google-cloud-bigquery
 The function exposes a REST endpoint (/export) that can be triggered to export data for a specified time window.
 Accepts POST requests with either:
 
-  A custom time window (when_read_from and when_read_to)
+- A custom time window
 ```json
   {
     "when_read_from": "YYYY-MM-DDTHH:MM:SS",
     "when_read_to": "YYYY-MM-DDTHH:MM:SS"
   }
 ```
-  A period string in format yyyyMM
+- A period string in format yyyyMM
   ```json
   {
     "period": "202503"
   }
 ```
-  No parameters (defaults to previous month)
+- No parameters (defaults to previous month)
 
 The folder structure for storing the data in the bucket is:
 
