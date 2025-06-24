@@ -1,4 +1,4 @@
-<h2 style="text-align: center"> igd-re-arms-vendor-data-simulator </h2>
+<h2 align="center"> igd-re-arms-vendor-data-simulator </h2>
 
 <!-- TABLE OF CONTENTS -->
 <details open>
@@ -77,6 +77,8 @@ In Intellij create an Application configuration to run the code and add the Java
 
 Now run the newly created Application configuration.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 #### Building an executable jar file
 
 1. Go to File->Project Structure->Artifacts->Add->JAR->From module with dependencies
@@ -98,6 +100,8 @@ Now run the newly created Application configuration.
 `Ex: ..\out\artifacts\igd_re_arms_vendor_data_simulator_jar`
 
 The executable jar is also stored on confluence: https://confluence.build.ingka.ikea.com/display/HRRE/Measurements+data+generator
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LICENSE -->
 ## License
