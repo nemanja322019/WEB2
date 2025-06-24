@@ -46,7 +46,7 @@ flask
 
 google-cloud-bigquery
 
-<p style="text-align: right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Run PES function
 
