@@ -16,7 +16,9 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#run-vendor-data-simulator">Run project</a></li>
+        <li><a href="#run-vendor-data-simulator">Run Vendor Data Simulator</a></li>
+        <li><a href="#running-from-intellij">Running from Intellij</a></li>
+        <li><a href="#building-an-executable-jar-file">Building an executable jar file</a></li>
       </ul>
     </li>
     <li><a href="#license">License</a></li>
