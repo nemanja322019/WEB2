@@ -15,10 +15,20 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#run-vendor-data-simulator">Run Vendor Data Simulator</a></li>
-        <li><a href="#running-from-intellij">Running from Intellij</a></li>
-        <li><a href="#building-an-executable-jar-file">Building an executable jar file</a></li>
+        <li>
+          <a href="#prerequisites">Prerequisites</a>
+          <ul>
+            <li><a href="#setting-up-java-fx-in-intellij">Setting up Java FX in Intellij</a></li>
+            <li><a href="#scenebuilder-tool-integration-with-intellij">SceneBuilder tool integration with Intellij</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#run-vendor-data-simulator">Run Vendor Data Simulator</a>
+          <ul>
+            <li><a href="#running-from-intellij">Running from Intellij</a></li>
+            <li><a href="#building-an-executable-jar-file">Building an executable jar file</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#license">License</a></li>
