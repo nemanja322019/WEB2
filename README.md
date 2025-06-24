@@ -46,6 +46,8 @@ flask
 
 google-cloud-bigquery
 
+<p style="text-align: right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Run PES function
 
 The function exposes a REST endpoint (/export) that can be triggered to export data for a specified time window.
