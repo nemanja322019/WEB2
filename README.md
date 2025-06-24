@@ -48,7 +48,7 @@ Access to BigQuery and GCS
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Run PES function
+### Run project
 
 The function exposes a REST endpoint (/export) that can be triggered to export data for a specified time window.
 Accepts POST requests with either:
