@@ -59,7 +59,7 @@ Accepts POST requests with either:
   }
 ```
 - A period string in format yyyyMM
-  ```json
+```json
   {
     "period": "202503"
   }
