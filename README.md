@@ -1,4 +1,9 @@
+<a id="readme-top"></a>
+
+<!-- PROJECT LOGO -->
+<br>
 <h2 align="center"> igd-re-arms-vendor-data-simulator </h2>
+<br>
 
 <!-- TABLE OF CONTENTS -->
 <details open>
