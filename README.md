@@ -19,7 +19,7 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#run">Run project</a></li>
+        <li><a href="#run-pes-function">Run project</a></li>
       </ul>
     </li>
     <li><a href="#license">License</a></li>
@@ -48,7 +48,7 @@ Access to BigQuery and GCS
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Run project
+### Run PES function
 
 The function exposes a REST endpoint (/export) that can be triggered to export data for a specified time window.
 Accepts POST requests with either:
