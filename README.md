@@ -1,16 +1,25 @@
-<h2 style="text-align: center"> igd-re-arms-vendor-data-simulator </h2>
+
+<a id="readme-top"></a>
+
+<!-- PROJECT LOGO -->
+<br>
+<h2 align="center">igd-re-arms-pes-function</h2>
+<br>
+
+
 
 <!-- TABLE OF CONTENTS -->
 <details open>
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="##about-the-project">About The Project</a>
+      <a href="#about-the-project">About The Project</a>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#run">Run project</a></li>
       </ul>
     </li>
     <li><a href="#license">License</a></li>
@@ -23,7 +32,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Source code for software application used in Energy Monitoring Project for generating fake measurements data to be used in e2e testing.
+Source code for a cloud function. It provides scheduled exports of measurement data from BigQuery to Google Cloud Storage in AVRO format, organized by date and vendor. It simulates the behavior of a Permanent Event Storage (PES) system.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -33,47 +42,61 @@ Source code for software application used in Energy Monitoring Project for gener
 
 ### Prerequisites
 
-The project is using Java FX for setting up a basic GUI used for parameter configuration.
+Flask
 
-#### Setting up Java FX in Intellij
-
-The Java FX library needs to be configured in Intellij. Download the Java FX SDK from the following link: https://gluonhq.com/products/javafx/
-
-And now in Intellij go to "Project Structure"->"Project Settings"->"Libraries"->"New Project Library"
-and provide the path to where the Java FX lib folder is located on the machine. Example:
-
-    C:\Program Files\Java\javafx-sdk-17.0.9\lib
-
-#### SceneBuilder tool integration with Intellij
-
-The panel containing all the fields from the GUI is created using the generator-panel-view.fxml file. SceneBuilder tool can be used to easily edit this file. In order to integrate SceneBuilder with Intellij you need to follow these steps:
-
-    1. Download and install the latest version of Scene Builder https://gluonhq.com/products/scene-builder/
-
-    2. In the Settings dialog select Languages & Frameworks | JavaFX.
-
-    3. Click the Browse button in the Path to SceneBuilder field.
-
-    4. In the dialog that opens, select the Scene Builder application (executable file) on your computer and click OK.
-
-    5. Apply the changes and close the dialog.
-
-At this stage the .fxml file can be opened in SceneBuilder by right-clicking on the file in IntelliJ and selecting "Open in SceneBuilder"
+Access to BigQuery and GCS
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Run PES function
+
+The function exposes a REST endpoint (/export) that can be triggered to export data for a specified time window.
+Accepts POST requests with either:
+
+- A custom time window
+```json
+  {
+    "when_read_from": "YYYY-MM-DDTHH:MM:SS",
+    "when_read_to": "YYYY-MM-DDTHH:MM:SS"
+  }
+```
+- A period string in format yyyyMM
+```json
+  {
+    "period": "202503"
+  }
+```
+- No parameters (defaults to previous month)
+
+The folder structure for storing the data in the bucket is:
+
+`<bucket-name>/year=<YYYY>/month=<MM>/day=<DD>/vendor=<vendor>`
+
+Example:
+
+`dev-em-backup-bucket/year=2025/month=03/day=23/vendor=testvendor`
+
+This code will get deployed in GCP as a cloud function using github actions.
+The configuration used in the deployment is written in json files under the `workflows/config` folder.
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 <!-- LICENSE -->
 ## License
 
-Developed for internal use.
+Developed for internal use only.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 
 <!-- CONTACT -->
 ## Contact
 
 Email: [o365g_digitalsustainability_itsehbg@ingka.com](o365g_digitalsustainability_itsehbg@ingka.com)
 
-Project Link: [GitHub link](https://github.com/ingka-group-digital/igd-re-arms-vendor-data-simulator)
+Project Link: [GitHub link](https://github.com/ingka-group-digital/igd-re-arms-pes-function)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
