@@ -1,25 +1,17 @@
-
-<a id="readme-top"></a>
-
-<!-- PROJECT LOGO -->
-<br>
-<h2 align="center">igd-re-arms-pes-function</h2>
-<br>
-
-
+<h2 style="text-align: center"> igd-re-arms-vendor-data-simulator </h2>
 
 <!-- TABLE OF CONTENTS -->
 <details open>
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="##about-the-project">About The Project</a>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#run-pes-function">Run project</a></li>
+        <li><a href="#run-vendor-data-simulator">Run project</a></li>
       </ul>
     </li>
     <li><a href="#license">License</a></li>
@@ -32,7 +24,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Source code for a cloud function. It provides scheduled exports of measurement data from BigQuery to Google Cloud Storage in AVRO format, organized by date and vendor. It simulates the behavior of a Permanent Event Storage (PES) system.
+Source code for software application used in Energy Monitoring Project for generating fake measurements data to be used in e2e testing.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -42,61 +34,83 @@ Source code for a cloud function. It provides scheduled exports of measurement d
 
 ### Prerequisites
 
-Flask
+The project is using Java FX for setting up a basic GUI used for parameter configuration.
 
-Access to BigQuery and GCS
+#### Setting up Java FX in Intellij
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+The Java FX library needs to be configured in Intellij. Download the Java FX SDK from the following link: https://gluonhq.com/products/javafx/
 
-### Run PES function
+And now in Intellij go to "Project Structure"->"Project Settings"->"Libraries"->"New Project Library"
+and provide the path to where the Java FX lib folder is located on the machine. Example:
 
-The function exposes a REST endpoint (/export) that can be triggered to export data for a specified time window.
-Accepts POST requests with either:
+    C:\Program Files\Java\javafx-sdk-17.0.9\lib
 
-- A custom time window
-```json
-  {
-    "when_read_from": "YYYY-MM-DDTHH:MM:SS",
-    "when_read_to": "YYYY-MM-DDTHH:MM:SS"
-  }
-```
-- A period string in format yyyyMM
-```json
-  {
-    "period": "202503"
-  }
-```
-- No parameters (defaults to previous month)
+#### SceneBuilder tool integration with Intellij
 
-The folder structure for storing the data in the bucket is:
+The panel containing all the fields from the GUI is created using the generator-panel-view.fxml file. SceneBuilder tool can be used to easily edit this file. In order to integrate SceneBuilder with Intellij you need to follow these steps:
 
-`<bucket-name>/year=<YYYY>/month=<MM>/day=<DD>/vendor=<vendor>`
+    1. Download and install the latest version of Scene Builder https://gluonhq.com/products/scene-builder/
 
-Example:
+    2. In the Settings dialog select Languages & Frameworks | JavaFX.
 
-`dev-em-backup-bucket/year=2025/month=03/day=23/vendor=testvendor`
+    3. Click the Browse button in the Path to SceneBuilder field.
 
-This code will get deployed in GCP as a cloud function using github actions.
-The configuration used in the deployment is written in json files under the `workflows/config` folder.
+    4. In the dialog that opens, select the Scene Builder application (executable file) on your computer and click OK.
 
+    5. Apply the changes and close the dialog.
+
+At this stage the .fxml file can be opened in SceneBuilder by right-clicking on the file in IntelliJ and selecting "Open in SceneBuilder"
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Run Vendor Data Simulator
+
+Build the project using the Maven command:
+
+    mvn clean package
+
+#### Running from Intellij
+
+In Intellij create an Application configuration to run the code and add the JavaFX module path and modules to the VM arguments:
+
+    --module-path "C:\Program Files\Java\javafx-sdk-17.0.9\lib" --add-modules javafx.fxml,javafx.base,javafx.controls,javafx.graphics,javafx.media
+
+Now run the newly created Application configuration.
+
+#### Building an executable jar file
+
+1. Go to File->Project Structure->Artifacts->Add->JAR->From module with dependencies
+2. Choose the igd-re-arms-vendor-data-simulator Module
+3. Choose the MainApplication.class as Main Class
+4. Choose the /src/ as the directory for the META-INF/MANIFEST.MF
+
+`Ex: D:\00_Dev\10_IKEA_Workspace\30_Projects\ingka-group-digital-realestate\igd-re-arms-vendor-data-simulator\src\`
+
+5. In the Output Layout tab on the right panel click the Add Copy Of -> File and choose all the .dll files under the Java FX bin folder
+
+`Ex: All dll files from C:\Program Files\Java\javafx-sdk-17.0.9\bin\`
+
+6. Click Apply and then OK
+7. Go to Build->Build Artifacts
+8. Choose the igd-re-arms-vendor-data-simulator:jar->Build
+9. Go inside the /out/ directory and double click the resulted jar file to start the app
+
+`Ex: ..\out\artifacts\igd_re_arms_vendor_data_simulator_jar`
+
+The executable jar is also stored on confluence: https://confluence.build.ingka.ikea.com/display/HRRE/Measurements+data+generator
 
 <!-- LICENSE -->
 ## License
 
-Developed for internal use only.
+Developed for internal use.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- CONTACT -->
 ## Contact
 
 Email: [o365g_digitalsustainability_itsehbg@ingka.com](o365g_digitalsustainability_itsehbg@ingka.com)
 
-Project Link: [GitHub link](https://github.com/ingka-group-digital/igd-re-arms-pes-function)
+Project Link: [GitHub link](https://github.com/ingka-group-digital/igd-re-arms-vendor-data-simulator)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
